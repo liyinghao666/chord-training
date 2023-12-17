@@ -1,17 +1,43 @@
+import { Note } from "tone/build/esm/core/type/NoteUnits";
+
 export const template = [
-  "C",
-  "C#",
-  "D",
-  "D#",
-  "E",
-  "F",
-  "F#",
-  "G",
-  "G#",
-  "A",
-  "A#",
-  "B",
-] as const; // 十二平均律绝对音高
+  "C3",
+  "C#3",
+  "D3",
+  "D#3",
+  "E3",
+  "F3",
+  "F#3",
+  "G3",
+  "G#3",
+  "A3",
+  "A#3",
+  "B3",
+  "C4",
+  "C#4",
+  "D4",
+  "D#4",
+  "E4",
+  "F4",
+  "F#4",
+  "G4",
+  "G#4",
+  "A4",
+  "A#4",
+  "B4",
+  "C5",
+  "C#5",
+  "D5",
+  "D#5",
+  "E5",
+  "F5",
+  "F#5",
+  "G5",
+  "G#5",
+  "A5",
+  "A#5",
+  "B5",
+] as Note[];
 export type MainNote = (typeof template)[number];
 export enum ChordType {
   Major3,
@@ -21,7 +47,7 @@ export enum ChordType {
 }
 export enum ModeType {
   Normal,
-  Ionian
+  Ionian,
 }
 // 各类和弦内音的音程关系
 const Minor3Step = [3, 4];
@@ -38,6 +64,6 @@ export const ChordStyleMap: Record<ChordType, Array<number>> = {
 const Normal = [2, 2, 1, 2, 2, 2, 1]; // 自然大调
 const Ionian = [2, 1, 2, 2, 1, 2, 2]; // 自然小调
 export const ModeMap: Record<ModeType, Array<number>> = {
-    [ModeType.Normal]: Normal,
-    [ModeType.Ionian]: Ionian
-}
+  [ModeType.Normal]: Normal,
+  [ModeType.Ionian]: Ionian,
+};

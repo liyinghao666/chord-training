@@ -1,40 +1,42 @@
-import solidLogo from "./assets/solid.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import player from "./player";
-import { onMount } from "solid-js";
+import { Show, onMount } from "solid-js";
 import { getChordNotes } from "./chords";
 import { ChordType, ModeType } from "./chords/const";
+import { TaskStatus, setTaskStatus, setUserAnswer, store } from "./store";
+import { JSX } from "solid-js/h/jsx-runtime";
 
 function App() {
-  onMount(() => {
-  })
   const handlePlay = async () => {
-    const Am = getChordNotes('A', ChordType.Minor3);
-    await player.playModeNotes('A', ModeType.Normal);
-    await player.play(Am);
+    setTaskStatus(TaskStatus.Playing);
+  };
+
+  const handleIndexClick: JSX.EventHandlerUnion<HTMLDivElement, MouseEvent> = (
+    e
+  ) => {
+    const index = parseInt(e.target.getAttribute("datatype") || "");
+    setUserAnswer(index);
   };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={solidLogo} class="logo solid" alt="Solid logo" />
-        </a>
-      </div>
-      <h1>Vite + Solid</h1>
       <div class="card">
-        <button onClick={handlePlay}>Play</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <Show when={store.taskStatus === TaskStatus.Finish}>
+          <Show when={store.correct} fallback={"Wrong!"}>
+            Correct!
+          </Show>
+        </Show>
+        <button onClick={handlePlay}>Go!</button>
+        <div onClick={handleIndexClick}>
+          <button datatype="1">1</button>
+          <button datatype="2">2</button>
+          <button datatype="3">3</button>
+          <button datatype="4">4</button>
+          <button datatype="5">5</button>
+          <button datatype="6">6</button>
+          <button datatype="7">7</button>
+        </div>
       </div>
-      <p class="read-the-docs">
-        Click on the Vite and Solid logos to learn more
-      </p>
     </>
   );
 }

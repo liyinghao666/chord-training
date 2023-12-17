@@ -33,15 +33,16 @@ export class Player {
   play = (notes: Note[], duration: Time = '1:0', start: Time = '+0:0') => {
     return new Promise(resolve => {
         Transport.scheduleOnce(() => {
-            console.log('play end');
             resolve(0);
         }, TimeClass(duration).toSeconds() + TimeClass(start).toSeconds());
+        console.log('play', notes);
         this.sampler.triggerAttackRelease(notes, duration, start);
     })
   };
   playModeNotes = (mainNote: MainNote, modeType: ModeType) => {
     const promiseArr: Promise<unknown>[] = [];
     const notes = getModeNotes(mainNote, modeType);
+    console.log(notes)
     notes.forEach((note, index) => {
         promiseArr.push(this.play([note], "1:0", `+0:${index}`));
     });
